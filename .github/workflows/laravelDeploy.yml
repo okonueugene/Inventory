@@ -1,0 +1,50 @@
+name: Deploy Laravel to FTP
+
+on:
+  push:
+    branches:
+      - master
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          
+      - name: Set directory permissions
+        run: chmod -R 777 storage bootstrap/cache
+        
+      - name: Deploy to FTP
+        if: github.ref == 'refs/heads/main'
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          
+      - name: Deploy to FTP (Staging)
+        if: github.ref == 'refs/heads/staging'
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.STAGING_FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+
+      - name: Update Dependencies
+        run: composer update
+        
+      - name: Install Dependencies
+        run: composer install
+        
+      - name: Clear cache
+        run: php artisan optimize:clear && composer dump-autoload
+        
+      - name: Storage link
+        run: php artisan storage:link
