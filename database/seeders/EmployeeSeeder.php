@@ -13,11 +13,12 @@ class EmployeeSeeder extends Seeder
     public function run(): void
     {
         $employees = [
-            ['name' => 'John Doe', 'department' => 'IT', 'designation' => 'Software Engineer', 'location' => 'New York'],
-            ['name' => 'Jane Doe', 'department' => 'HR', 'designation' => 'HR Manager', 'location' => 'Los Angeles'],
-            ['name' => 'Mark Doe', 'department' => 'Finance', 'designation' => 'Finance Manager', 'location' => 'Chicago'],
-            ['name' => 'Chris Doe', 'department' => 'IT', 'designation' => 'System Administrator', 'location' => 'Houston'],
-            ['name' => 'Sara Doe', 'department' => 'HR', 'designation' => 'HR Executive', 'location' => 'Phoenix'],
+            ['name' => 'John Doe', 'department' => 'IT', 'designation' => 'Software Engineer', 'location' => 'New York','user_id' => 1],
+            ['name' => 'Jane Doe', 'department' => 'HR', 'designation' => 'HR Manager', 'location' => 'Los Angeles', 'user_id' => 2],
+            ['name' => 'Mark Doe', 'department' => 'Finance', 'designation' => 'Finance Manager', 'location' => 'Chicago', 'user_id' => 1],
+            ['name' => 'Chris Doe', 'department' => 'IT', 'designation' => 'System Administrator', 'location' => 'Houston' ,'user_id' => 2],
+            ['name' => 'Sara Doe', 'department' => 'HR', 'designation' => 'HR Executive', 'location' => 'Phoenix', 'user_id' => 1],
+            ['name' => 'Mike Doe', 'department' => 'Finance', 'designation' => 'Finance Executive', 'location' => 'Philadelphia', 'user_id' => 2],
         ];
 
         foreach ($employees as $employee) {
