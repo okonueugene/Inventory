@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'v1'], function () {
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('employees', [EmployeesController::class, 'index']);
-    Route::get('assets', [AssetController::class, 'index']);
     Route::post('assets', [AssetController::class, 'store']);
     Route::get('assets/{id}', [AssetController::class, 'show']);
     Route::put('assets/{id}', [AssetController::class, 'update']);
