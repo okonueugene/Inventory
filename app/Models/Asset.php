@@ -36,6 +36,11 @@ class Asset extends Model implements HasMedia
         return $this->belongsTo(Category::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function employee()
     {
         return $this->belongsTo(Employee::class);

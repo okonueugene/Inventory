@@ -81,7 +81,8 @@
                                 transitionIn: "fadeInDown"
                             });
 
-                            page_table.ajax.reload();
+                            
+                            $('#page_table').DataTable().ajax.reload();
 
                         } else {
                             iziToast.error({
@@ -107,6 +108,7 @@
             $(this).modal('show');
         });
     });
+
     $(document).on('click', '.delete-record-accordion', function() {
         Swal.fire({
             title: 'Are you sure?',
@@ -195,7 +197,11 @@
                         transitionIn: "fadeInDown"
                     });
 
-                    page_table.ajax.reload();
+                    // Close the modal and reload the table
+                    $('.modal').modal('hide');
+                    $('#page_table').DataTable().ajax.reload();
+
+
                 } else {
                     let errorMessage = "";
 
@@ -203,7 +209,7 @@
                     if (result.errors) {
                         $.each(result.errors, function(key, value) {
                             errorMessage += value[0] +
-                            "<br>"; // Appending errors as HTML line breaks
+                                "<br>"; // Appending errors as HTML line breaks
                         });
                     } else {
                         errorMessage = result.msg ? result.msg : "An unknown error occurred.";
@@ -230,7 +236,7 @@
                     // Loop through and display validation errors
                     $.each(errors, function(key, value) {
                         errorMessage += value[0] +
-                        "<br>"; // Appending errors as HTML line breaks
+                            "<br>"; // Appending errors as HTML line breaks
                     });
 
                     iziToast.error({

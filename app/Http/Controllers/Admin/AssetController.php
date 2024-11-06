@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Asset;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Asset;
+use App\Models\Category;
+use App\Models\Employee;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssetController extends Controller
@@ -78,15 +82,19 @@ class AssetController extends Controller
     {
         $page_title = 'Create Asset';
 
-        return view('admin.assets.create', compact('page_title'));
+        $categories = Category::all();
+
+        $employees = Employee::all();
+
+        return view('admin.assets.create', compact('page_title', 'categories', 'employees'));
     }
 
     public function store(Request $request)
     {
         $rules = [
             'name' => 'required',
-            'category_id' => 'required|exists:categories,id',
-            'employee_id' => 'nullable|exists:employees,id',
+            'category' => 'required|exists:categories,id',
+            'employee' => 'nullable|exists:employees,id',
             'description' => 'nullable',
             'code' => 'required|unique:assets',
             'serial_number' => 'nullable|unique:assets',
@@ -99,8 +107,8 @@ class AssetController extends Controller
         ];
 
         $messages = [
-            'category_id.exists' => 'The selected category is invalid.',
-            'employee_id.exists' => 'The selected employee is invalid.',
+            'category.exists' => 'The selected category is invalid.',
+            'employee.exists' => 'The selected employee is invalid.',
         ];
 
         //use Validator facade to validate the request
@@ -117,8 +125,8 @@ class AssetController extends Controller
 
             $asset = Asset::create([
                 'name' => $request->name,
-                'category_id' => $request->category_id,
-                'employee_id' => $request->employee_id,
+                'category_id' => $request->category,
+                'employee_id' => $request->employee,
                 'user_id' => auth()->user()->id,
                 'description' => $request->description,
                 'code' => $request->code,
@@ -137,112 +145,119 @@ class AssetController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.assets.index')->with('success', 'Asset created successfully');
+            $output = [
+                'success' => true,
+                'msg' => 'Asset created successfully',
+            ];
+
+            return response()->json($output, 200);
+
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->route('admin.assets.index')->with('error', 'An error occurred while creating the asset');
+            $output = [
+                'success' => false,
+                'msg' => 'An error occurred while creating the asset',
+            ];
+
+            return response()->json($output, 400);
         }
     }
 
-        public function show($id)
-        {
-            $asset = Asset::with('category', 'employee')->findOrFail($id);
+    public function show($id)
+    {
+        $asset = Asset::with('category', 'employee', 'user')->findOrFail($id);
 
-            return view('admin.assets.show', compact('asset'));
-        }
+        return view('admin.assets.show', compact('asset'));
+    }
 
-        public function edit($id)
-        {
+    public function edit($id)
+    {
+        $asset = Asset::findOrFail($id);
+
+        $employees = Employee::all();
+
+        $categories = Category::all();
+
+        $page_title = 'Edit Asset';
+
+        return view('admin.assets.edit', compact('asset', 'page_title', 'employees', 'categories'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+
+            DB::beginTransaction();
+
             $asset = Asset::findOrFail($id);
 
-            $page_title = 'Edit Asset';
+            $asset->update([
+                'name' => $request->name,
+                'category_id' => $request->category,
+                'employee_id' => $request->employee,
+                'description' => $request->description,
+                'code' => $request->code,
+                'serial_number' => $request->serial_number,
+                'status' => $request->status,
+                'purchase_date' => $request->purchase_date,
+                'warranty_date' => $request->warranty_date,
+                'decommission_date' => $request->decommission_date,
+            ]);
 
-            return view('admin.assets.edit', compact('asset', 'page_title'));
-        }
+            if ($request->hasFile('image')) {
+                $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
+            }
 
-        public function update(Request $request, $id)
-        {
-            $rules = [
-                'name' => 'required',
-                'category_id' => 'required|exists:categories,id',
-                'employee_id' => 'nullable|exists:employees,id',
-                'description' => 'nullable',
-                'code' => 'required|unique:assets,code,' . $id,
-                'serial_number' => 'nullable|unique:assets,serial_number,' . $id,
-                'status' => 'required',
-                'purchase_date' => 'nullable',
-                'warranty_date' => 'nullable',
-                'decommission_date' => 'nullable',
-                'latitude' => 'nullable',
-                'longitude' => 'nullable',
+            // DB::commit();
+
+            $output = [
+                'success' => true,
+                'msg' => 'Asset updated successfully',
             ];
 
-            $messages = [
-                'category_id.exists' => 'The selected category is invalid.',
-                'employee_id.exists' => 'The selected employee is invalid.',
+            return response()->json($output, 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $output = [
+                'success' => false,
+                'msg' => 'An error occurred while updating the asset',
             ];
 
-            //use Validator facade to validate the request
-            $validator = Validator::make($request->all(), $rules, $messages);
-
-            //if the validation fails, return the error messages
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
-            }
-
-            try {
-
-                DB::beginTransaction();
-
-                $asset = Asset::findOrFail($id);
-
-                $asset->update([
-                    'name' => $request->name,
-                    'category_id' => $request->category_id,
-                    'employee_id' => $request->employee_id,
-                    'description' => $request->description,
-                    'code' => $request->code,
-                    'serial_number' => $request->serial_number,
-                    'status' => $request->status,
-                    'purchase_date' => $request->purchase_date,
-                    'warranty_date' => $request->warranty_date,
-                    'decommission_date' => $request->decommission_date,
-                    'latitude' => $request->latitude,
-                    'longitude' => $request->longitude,
-                ]);
-
-                if ($request->hasFile('image')) {
-                    $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
-                }
-
-                DB::commit();
-
-                return redirect()->route('admin.assets.index')->with('success', 'Asset updated successfully');
-            } catch (\Exception $e) {
-                DB::rollBack();
-
-                return redirect()->route('admin.assets.index')->with('error', 'An error occurred while updating the asset');
-            }
+            return response()->json($output, 400);
         }
+    }
 
-        public function destroy($id)
-        {
-            try {
+    public function destroy($id)
+    {
+        try {
 
-                DB::beginTransaction();
+            DB::beginTransaction();
 
-                $asset = Asset::findOrFail($id);
+            $asset = Asset::findOrFail($id);
 
-                $asset->delete();
+            $asset->delete();
 
-                DB::commit();
+            DB::commit();
 
-                return redirect()->route('admin.assets.index')->with('success', 'Asset deleted successfully');
-            } catch (\Exception $e) {
-                DB::rollBack();
+            $output = [
+                'success' => true,
+                'msg' => 'Asset deleted successfully',
+            ];
 
-                return redirect()->route('admin.assets.index')->with('error', 'An error occurred while deleting the asset');
-            }
+            return response()->json($output, 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $output = [
+                'success' => false,
+                'msg' => 'An error occurred while deleting the asset',
+            ];
+
+            return response()->json($output, 400);
         }
+    }
 }

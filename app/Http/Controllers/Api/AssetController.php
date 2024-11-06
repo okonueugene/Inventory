@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Asset;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class AssetController extends Controller
@@ -59,7 +59,37 @@ class AssetController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $asset = Asset::create($request->all());
+        $coordinates = $request->coordinates;
+        $latitude = null;
+        $longitude = null;
+    
+        if ($coordinates) {
+            // Assuming coordinates format is always "latitude,longitude"
+            [$latitude, $longitude] = explode(',', $coordinates);
+        }
+    
+
+        $asset = Asset::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'employee_id' => $request->employee_id,
+            'user_id' => auth()->user()->id,
+            'description' => $request->description,
+            'code' => $request->code,
+            'serial_number' => $request->serial_number,
+            'status' => $request->status,
+            'purchase_date' => $request->purchase_date,
+            'warranty_date' => $request->warranty_date,
+            'decommission_date' => $request->decommission_date,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+        ]);
+
+        //check if image is uploaded
+        if ($request->hasFile('image')) {
+            $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
+        }
+        
 
         return response()->json($asset, 201);
     }
@@ -69,6 +99,5 @@ class AssetController extends Controller
         $asset = Asset::with('category', 'employee')->findOrFail($id);
 
         return response()->json($asset);
-        }                       
+    }
 }
-               

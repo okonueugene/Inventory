@@ -3,8 +3,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="add-button">
             <a href="javascript:void(0)" class="btn btn-primary btn-sm  float-end mx-2 modal-button mt-2"
-                data-href="{{ url('/admin/sites/create') }}">
-                Add Site
+                data-href="{{ url('/admin/assets/create') }}">
+                Add 
             </a>
         </div>
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"> </span>{{ $page_title }}</h4>
@@ -97,23 +97,7 @@
 
             //initialize the page table
             var page_table = __initializePageTable(url, columns, filters);
-        
-
-            // Navigate to site overview on click within elements with class 'text-center'
-            $(document).on('click', '.text-center', function(event) {
-
-                // Prevent default behavior to avoid unintended actions (like sorting)
-                event.preventDefault();
-
-                // Check if the clicked element is within a table cell (`<td>`)
-                if ($(this).is('td')) {
-                    var data = page_table.row($(this).closest('tr')).data(); // Get data from the row
-                    var url = "{{ url('/admin/assets/:id') }}";
-                    url = url.replace(':id', data.id);
-                    window.location.href = url;
-                }
-            });
-
+    
 
         });
     </script>

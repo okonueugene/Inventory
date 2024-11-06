@@ -17,13 +17,13 @@
           </a>
         </li>
         <li class="menu-item {{ request()->segment(2) == 'employees' ? 'active' : '' }}">
-          <a href="javascript:void(0)" class="menu-link">
+          <a href="{{ url('/admin/employees') }}" class="menu-link">
             <i class="menu-icon tf-icons ti ti-user"></i>
             <div data-i18n="Employees">Employees</div>
           </a>
         </li>
         <li class="menu-item {{ request()->segment(2) == 'categories' ? 'active' : '' }}">
-          <a href="javascript:void(0)" class="menu-link">
+          <a href="{{ url('/admin/categories') }}" class="menu-link">
             <i class="menu-icon tf-icons ti ti-list"></i>
             <div data-i18n="Categories">Categories</div>
           </a>
@@ -45,8 +45,8 @@
         </li> --}}
 
         <!-- User Management -->
-        <li class="menu-item {{ request()->segment(2) == 'user-management' ? 'active' : '' }}">
-          <a href="{{ url('/admin/user-management') }}" class="menu-link">
+        <li class="menu-item {{ request()->segment(2) == 'users' ? 'active' : '' }}">
+          <a href="{{ url('/admin/users') }}" class="menu-link">
             <i class="menu-icon tf-icons ti ti-user"></i>
             <div data-i18n="User Management">User Management</div>
           </a>
