@@ -3,11 +3,12 @@
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"> </span>{{ $page_title }}</h4>
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title fw-bolder">Dashboard</h3>
+                        <h5 class="card-title fw-bolder">Summary Report</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -17,7 +18,7 @@
                                         <div class="d-flex justify-content-between">
                                             <div>
                                                 <h5 class="card-title fw-bolder">Total Assets</h5>
-                                                <h3 class="card-text">100</h3>
+                                                <h6 class="card-text">100</h6>
                                             </div>
                                             <div class="card-icon">
                                                 <i class="ti ti-layout-grid2"></i>
@@ -32,7 +33,7 @@
                                         <div class="d-flex justify-content-between">
                                             <div>
                                                 <h5 class="card-title fw-bolder">Total Employees</h5>
-                                                <h3 class="card-text">100</h3>
+                                                <h6 class="card-text">100</h6>
                                             </div>
                                             <div class="card-icon">
                                                 <i class="ti ti-user text-primary"></i>
@@ -47,7 +48,7 @@
                                         <div class="d-flex justify-content-between">
                                             <div>
                                                 <h5 class="card-title fw-bolder">Total Categories</h5>
-                                                <h3 class="card-text">100</h3>
+                                                <h6 class="card-text">100</h6>
                                             </div>
                                             <div class="card-icon">
                                                 <i class="ti ti-list text-danger"></i>
@@ -62,7 +63,7 @@
                                         <div class="d-flex justify-content-between">
                                             <div>
                                                 <h5 class="card-title fw-bolder">Total Reports</h5>
-                                                <h3 class="card-text">100</h3>
+                                                <h6 class="card-text">100</h6>
                                             </div>
                                             <div class="card-icon">
                                                 <i class="ti ti-receipt text-success"></i>
@@ -80,7 +81,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title fw-bolder">Recent Assets</h3>
+                        <h5 class="card-title fw-bolder">Recent Assets</h5>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
