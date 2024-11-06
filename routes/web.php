@@ -25,22 +25,25 @@ Route::group(
         Route::get('/reset-password/{token}', 'Auth\AuthenticationController@resetPassword')->name('reset-password-form');
         Route::post('/reset-password', 'Auth\AuthenticationController@reset')->name('reset-password');
         Route::get('/logout', 'Auth\AuthenticationController@logout')->name('logout');
+        Route::group(['middleware' => ['auth', 'read.notification']], function () {
 
-        //Admin routes
-        Route::group([
-            'prefix' => 'admin',
-            'middleware' => 'admin',
-        ], function () {
+            //Admin routes
+            Route::group([
+                'prefix' => 'admin',
+                'middleware' => 'admin',
+            ], function () {
 
-            Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
+                Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
 
-            Route::resource('/categories', 'Admin\CategoryController');
-            Route::resource('/employees', 'Admin\EmployeesController');
-            Route::resource('/assets', 'Admin\AssetController');
-            Route::resource('/reports', 'Admin\ReportsController');
-            Route::resource('/users', 'Admin\UserController');
+                Route::resource('/categories', 'Admin\CategoryController');
+                Route::resource('/employees', 'Admin\EmployeesController');
+                Route::resource('/assets', 'Admin\AssetController');
+                Route::resource('/reports', 'Admin\ReportsController');
+                Route::resource('/users', 'Admin\UserController');
 
-        }
-        );
+            }
+            );
+
+        });
     }
 );
