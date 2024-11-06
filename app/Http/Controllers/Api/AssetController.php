@@ -73,7 +73,7 @@ class AssetController extends Controller
             'name' => $request->name,
             'category_id' => $request->category_id,
             'employee_id' => $request->employee_id,
-            'user_id' => auth()->user()->id,
+            'user_id' => auth()->user()->id ?? 1,
             'description' => $request->description,
             'code' => $request->code,
             'serial_number' => $request->serial_number,
@@ -89,7 +89,7 @@ class AssetController extends Controller
         if ($request->hasFile('image')) {
             $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
         }
-        
+
 
         return response()->json($asset, 201);
     }
