@@ -64,7 +64,7 @@ class AssetController extends Controller
                     return $row->employee->name;
                 })
                 ->addColumn('status', function ($row) {
-                    $html = $row->status == 'available' ? '<span class="badge bg-success">Available</span>' : '<span class="badge bg-danger">Not Available</span>';
+                    $html = $row->status == 1 ? '<span class="badge bg-success">Available</span>' : '<span class="badge bg-danger">Not Available</span>';
                     return $html;
                 })
 

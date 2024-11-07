@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('code')->unique();
             $table->string('serial_number')->nullable()->unique();
-            $table->string('status')->default('available');
+            $table->boolean('status')->default(1);
             $table->date('purchase_date')->nullable();
             $table->date('warranty_date')->nullable();
             $table->date('decommission_date')->nullable();

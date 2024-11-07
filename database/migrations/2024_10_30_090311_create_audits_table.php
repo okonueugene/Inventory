@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('asset_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('status')->default('pending');
+            $table->boolean('status')->default(1);
             $table->string('remarks')->nullable();
             $table->string('condition')->nullable();
             $table->string('action')->nullable();
