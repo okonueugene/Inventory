@@ -22,7 +22,7 @@ class AssetController extends Controller
                 ->addColumn(
                     'action',
                     function ($row) {
-                        $row->load('media');
+                        $row->load('media', 'category', 'employee');
                         $html = '
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary dropdown-toggle btn-sm" data-bs-toggle="dropdown"
@@ -61,7 +61,7 @@ class AssetController extends Controller
                     return $row->category->name;
                 })
                 ->addColumn('employee', function ($row) {
-                    return $row->employee->name;
+                    return $row->employee->name ?? 'N/A';
                 })
                 ->addColumn('status', function ($row) {
                     $html = $row->status == 1 ? '<span class="badge bg-success">Available</span>' : '<span class="badge bg-danger">Not Available</span>';
