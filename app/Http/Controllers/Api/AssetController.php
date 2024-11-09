@@ -96,7 +96,7 @@ class AssetController extends Controller
 
     public function show($id)
     {
-        $asset = Asset::with('category', 'employee')->findOrFail($id);
+        $asset = Asset::with('category', 'employee')->where('code', $id)->first();
 
         return response()->json($asset);
     }
