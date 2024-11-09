@@ -98,6 +98,10 @@ class AssetController extends Controller
     {
         $asset = Asset::with('category', 'employee')->where('code', $id)->first();
 
+        if (!$asset) {
+            return response()->json(['message' => 'Asset not found'], 200);
+        }
+
         return response()->json($asset);
     }
 }
