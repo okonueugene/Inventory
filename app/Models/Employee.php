@@ -15,7 +15,6 @@ class Employee extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $fillable = [
-        'user_id',
         'name',
         'department',
         'designation',
