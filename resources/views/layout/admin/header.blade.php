@@ -8,7 +8,10 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon_io/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" sizes="192x192" href="{{ asset('assets/img/icons/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/x-icon" sizes="32x32" href="{{ asset('assets/img/icons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/x-icon" sizes="96x96" href="{{ asset('assets/img/icons/favicon-96x96.png') }}">
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('assets/img/icons/favicon-16x16.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
     <!-- Select2 -->
     <link rel="stylesheet"

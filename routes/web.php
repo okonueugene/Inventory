@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(
     ['namespace' => 'App\Http\Controllers'],
     function () {
-        Route::get('/', 'Auth\LoginController@index');
+        Route::get('/', 'Auth\LoginController@index')->name('home');
         Route::post('/login', 'Auth\AuthenticationController@loginUser')->name('loginUser');
         Route::get('/register', 'Auth\AuthenticationController@register')->name('register');
         Route::post('/registerUser', 'Auth\AuthenticationController@registerUser')->name('registerUser');

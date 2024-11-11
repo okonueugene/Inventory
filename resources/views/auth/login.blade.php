@@ -13,7 +13,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon_io/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logo.jpeg') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -60,10 +60,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="{{ asset('assets/img/logo.png') }}" class="mb-2" alt="" />
+                            <img src="{{ asset('assets/img/logo.jpeg') }}" class="mb-2" alt="" width="80" />
                         </div>
-                        <h4 class="mb-1 pt-2">Welcome to {{ env('APP_NAME') }}</h4>
-                        <p class="mb-4">Please sign-in to your account below.</p>
+                        <h4 class="mb-1 pt-2 text-center">Welcome to {{ env('APP_NAME') }}</h4>
+                        <p class="mb-4 text-center">Please sign-in to your account below.</p>
 
                         <form id="formAuthentication" class="mb-3" action="{{ route('loginUser') }}" method="POST">
                             @csrf

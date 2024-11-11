@@ -107,6 +107,8 @@
                         @endforeach
                     </div>
                 @else
+                <label class="form-label">Asset Picture</label>
+
                     <p>No media available for this record.</p>
                 @endif
             </div>
