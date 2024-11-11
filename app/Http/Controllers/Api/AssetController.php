@@ -127,7 +127,26 @@ class AssetController extends Controller
                 return response()->json(['message' => 'Asset not found'], 404);
             }
 
-            $asset->update($request->all());
+            $coordinates = $request->coordinates;
+            $latitude = null;
+            $longitude = null;
+        
+            if ($coordinates) {
+                // Assuming coordinates format is always "latitude,longitude"
+                [$latitude, $longitude] = explode(',', $coordinates);
+            }
+    
+
+            $asset->update([
+                'description' => $request->description,
+                'serial_number' => $request->serial_number,
+                'status' => $request->status,
+                'purchase_date' => $request->purchase_date,
+                'warranty_date' => $request->warranty_date,
+                'decommission_date' => $request->decommission_date,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+            ]);
 
             DB::commit();
 
