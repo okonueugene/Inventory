@@ -23,9 +23,6 @@ Route::group(['prefix' => 'v1'], function () {
     // Route::group(['middleware' => 'auth:sanctum', 'ensure_json_header'], function () {
         Route::get('categories', [CategoryController::class, 'index']);
         Route::get('employees', [EmployeesController::class, 'index']);
-        Route::post('assets', [AssetController::class, 'store']);
-        Route::get('assets/{id}', [AssetController::class, 'show']);
-        Route::put('assets/{id}', [AssetController::class, 'update']);
-        Route::delete('assets/{id}', [AssetController::class, 'destroy']);
+        Route::apiResource('assets', AssetController::class);
     // });
 });
