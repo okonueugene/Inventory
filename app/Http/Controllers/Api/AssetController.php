@@ -67,6 +67,10 @@ class AssetController extends Controller
             // Assuming coordinates format is always "latitude,longitude"
             [$latitude, $longitude] = explode(',', $coordinates);
         }
+
+        try{
+
+            DB::beginTransaction();
     
 
         $asset = Asset::create([
@@ -90,8 +94,27 @@ class AssetController extends Controller
             $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
         }
 
+        DB::commit();
 
-        return response()->json($asset, 201);
+        $output = [
+            'success' => true,
+            'message' => 'Asset created successfully',
+            'data' => $asset
+        ];
+
+        return response()->json($output, 201);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            $output = [
+                'success' => false,
+                'message' => 'Asset creation failed',
+                'error' => $e->getMessage()
+            ];
+
+            return response()->json($output, 400);
+        }
     }
 
     public function show($id)
