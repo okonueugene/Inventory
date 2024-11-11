@@ -37,8 +37,6 @@ jobs:
           username: ${{ secrets.STAGING_FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
 
-      - name: Install Dependencies
-        run: composer install
         
       - name: Clear cache
         run: php artisan optimize:clear && composer dump-autoload
