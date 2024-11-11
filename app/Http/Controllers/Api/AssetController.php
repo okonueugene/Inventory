@@ -87,6 +87,7 @@ class AssetController extends Controller
 
         //check if image is uploaded
         if ($request->hasFile('image')) {
+            dd($request->file('image'));
             $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
         }
 

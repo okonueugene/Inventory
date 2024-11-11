@@ -22,6 +22,15 @@
                 <label class="form-label">Employee</label>
                 <input type="text" class="form-control" value="{{ $asset->employee->name ?? 'N/A' }}" readonly>
             </div>
+            <!--Code -->
+            <div class="mb-3">
+                <label class="form-label">Code</label>
+                <div class="d-flex align-items-center mt-2">
+                    <!-- insert your custom barcode setting your data in the GET parameter "data" -->
+                    <img alt='Barcode'
+                        src='https://barcode.tec-it.com/barcode.ashx?data={{ $asset->code }}&translate-esc=on' />
+                </div>
+            </div>
 
             <!-- Serial No -->
             <div class="mb-3">
@@ -76,11 +85,14 @@
     $(document).ready(function() {
         // Initialize the map with a default center
         var map = L.map('map').setView([0, 0], 1);
-        
+
         // Use OpenStreetMap tiles as a fallback
-        const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+        const attribution =
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
         const tileUrl = 'http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}&s=Ga';
-        const tiles = L.tileLayer(tileUrl, { attribution });
+        const tiles = L.tileLayer(tileUrl, {
+            attribution
+        });
         tiles.addTo(map);
 
         // Get coordinates from the Blade template
@@ -94,9 +106,8 @@
         }
 
         // Refresh map size when modal is opened
-        $('#common_modal').on('shown.bs.modal', function () {
+        $('#common_modal').on('shown.bs.modal', function() {
             map.invalidateSize();
         });
     });
 </script>
-
