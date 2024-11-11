@@ -140,7 +140,6 @@ class AssetController extends Controller
             $asset->update([
                 'description' => $request->description,
                 'serial_number' => $request->serial_number,
-                'status' => $request->status,
                 'purchase_date' => $request->purchase_date,
                 'warranty_date' => $request->warranty_date,
                 'decommission_date' => $request->decommission_date,
