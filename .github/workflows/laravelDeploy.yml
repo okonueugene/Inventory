@@ -38,8 +38,3 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
 
         
-      - name: Clear cache
-        run: php artisan optimize:clear && composer dump-autoload
-        
-      - name: Storage link
-        run: php artisan storage:link
