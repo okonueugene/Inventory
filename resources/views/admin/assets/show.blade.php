@@ -70,8 +70,45 @@
             </div>
             <!-- Created At -->
             <div class="mb-3">
-                <label class="form-label">Created At</label>
+                <label class="form-label">Added On</label>
                 <input type="text" class="form-control" value="{{ $asset->created_at }}" readonly>
+            </div>
+            <!-- Media -->
+            <div class="mb-3">
+                @if ($asset->media->count())
+                    <label class="form-label">Asset Picture</label>
+                    <div class="row">
+                        @foreach ($asset->media as $media)
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <?php
+                                        $mediaUrl = $media->original_url;
+                                        
+                                        // Define the regex pattern to match the part you want to replace
+                                        $pattern = '/http:\/\/localhost\/storage\//';
+                                        
+                                        // Define the replacement string (the part you want to replace it with)
+                                        $replacement = '';
+                                        
+                                        // Use preg_replace to replace the matched part with the replacement
+                                        $cleanedUrl = preg_replace($pattern, $replacement, $mediaUrl);
+                                        
+                                        //set the cleaned url as the new url
+                                        $mediaUrl = $cleanedUrl;
+                                        
+                                        ?>
+                                        <img src="{{ asset('storage/' . $mediaUrl) }}" alt="{{ $media->file_name }}"
+                                            class="card-img-top" width="200px" height="200px">
+                                        <p style="font-size: 11px;">{{ $media->file_name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p>No media available for this record.</p>
+                @endif
             </div>
             <!-- Location -->
             <div class="mb-3">

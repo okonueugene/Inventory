@@ -166,7 +166,7 @@ class AssetController extends Controller
 
     public function show($id)
     {
-        $asset = Asset::with('category', 'employee', 'user')->findOrFail($id);
+        $asset = Asset::with('category', 'employee', 'user', 'media')->findOrFail($id);
 
         return view('admin.assets.show', compact('asset'));
     }
