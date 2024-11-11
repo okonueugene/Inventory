@@ -37,9 +37,6 @@ jobs:
           username: ${{ secrets.STAGING_FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
 
-      - name: Update Dependencies
-        run: composer update
-        
       - name: Install Dependencies
         run: composer install
         
