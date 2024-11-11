@@ -128,4 +128,40 @@ class AssetController extends Controller
 
         return response()->json($asset);
     }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $asset = Asset::where('code', $id)->first();
+
+            if (!$asset) {
+                return response()->json(['message' => 'Asset not found'], 404);
+            }
+
+            $asset->update($request->all());
+
+            DB::commit();
+
+            $output = [
+                'success' => true,
+                'message' => 'Asset updated successfully',
+                'data' => $asset
+            ];
+
+            return response()->json($output, 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $output = [
+                'success' => false,
+                'message' => 'Asset update failed',
+                'error' => $e->getMessage()
+            ];
+
+            return response()->json($output, 400);
+        }
+    }
 }
