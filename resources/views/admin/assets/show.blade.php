@@ -99,7 +99,7 @@
                                         
                                         ?>
                                         <img src="{{ asset('storage/' . $mediaUrl) }}" alt="{{ $media->file_name }}"
-                                            class="card-img-top" width="200px" height="200px">
+                                            class="card-img-top" width="100%" height="200px">
                                         <p style="font-size: 11px;">{{ $media->file_name }}</p>
                                     </div>
                                 </div>
