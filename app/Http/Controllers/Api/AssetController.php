@@ -137,15 +137,23 @@ class AssetController extends Controller
             }
     
 
-            $asset->update([
-                'description' => $request->description,
-                'serial_number' => $request->serial_number,
-                'purchase_date' => $request->purchase_date,
-                'warranty_date' => $request->warranty_date,
-                'decommission_date' => $request->decommission_date,
-                'latitude' => $latitude,
-                'longitude' => $longitude,
-            ]);
+            //update the asset
+            $asset->serial_number = $request->serial_number;
+            $asset->purchase_date = $request->purchase_date;
+            $asset->warranty_date = $request->warranty_date;
+            $asset->decommission_date = $request->decommission_date;
+            $asset->latitude = $latitude;
+            $asset->longitude = $longitude;
+
+
+
+            if ($request->hasFile('image')) {
+                $asset->clearMediaCollection('asset_images');
+                $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
+            }
+
+            $asset->save();
+            
 
             DB::commit();
 
