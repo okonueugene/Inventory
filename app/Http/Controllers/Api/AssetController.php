@@ -110,15 +110,14 @@ class AssetController extends Controller
         $asset = Asset::with('category', 'employee')->where('code', $id)->first();
 
         if (!$asset) {
-            return response()->json(['message' => 'Asset not found'], 200);
+            return response()->json(['message' => 'Asset not found'], 404);
         }
 
-        return response()->json($asset);
+        return response()->json(['message' => 'Asset found', 'data' => $asset], 200);
     }
 
     public function update(Request $request, $id)
     {
-    
         try {
             DB::beginTransaction();
 
@@ -150,7 +149,6 @@ class AssetController extends Controller
                 'latitude' => $latitude,
                 'longitude' => $longitude,
             ]);
-            
 
             DB::commit();
 
