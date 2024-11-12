@@ -35,7 +35,7 @@
             <!-- Serial No -->
             <div class="mb-3">
                 <label class="form-label">Serial No</label>
-                <input type="text" class="form-control" value="{{ $asset->serial_no ?? 'N/A' }}" readonly>
+                <input type="text" class="form-control" value="{{ $asset->serial_number ?? 'N/A' }}" readonly>
             </div>
             <!-- Status -->
             <div class="mb-3">
