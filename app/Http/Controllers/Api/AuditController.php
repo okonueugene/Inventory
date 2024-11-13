@@ -41,6 +41,7 @@ class AuditController extends Controller
             $audit->remarks = $request->remarks;
             $audit->condition = $request->condition;
             $audit->action = $request->action;
+            $audit->status = 0;
 
             $audit->save();
 
