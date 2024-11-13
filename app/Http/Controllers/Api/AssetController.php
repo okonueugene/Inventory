@@ -12,7 +12,7 @@ class AssetController extends Controller
 {
     public function index(Request $request)
     {
-        $assets = Asset::with('category', 'employee')->get();
+        $assets = Asset::with('category', 'employee')->orderBy('created_at', 'desc')->get();
 
         return response()->json($assets);
     }

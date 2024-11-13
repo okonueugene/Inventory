@@ -1,10 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AssetController;
+use App\Http\Controllers\Api\AuditController;
+use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EmployeesController;
-use App\Http\Controllers\Api\AuthenticationController;
+use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +26,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('categories', [CategoryController::class, 'index']);
         Route::get('employees', [EmployeesController::class, 'index']);
         Route::apiResource('assets', AssetController::class);
+        Route::apiResource('audits', AuditController::class);
     });
 });
