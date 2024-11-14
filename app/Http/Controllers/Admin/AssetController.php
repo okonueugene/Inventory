@@ -209,7 +209,7 @@ class AssetController extends Controller
                 $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
             }
 
-            // DB::commit();
+            DB::commit();
 
             $output = [
                 'success' => true,

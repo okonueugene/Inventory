@@ -38,7 +38,7 @@ Route::group(
                 Route::resource('/categories', 'Admin\CategoryController');
                 Route::resource('/employees', 'Admin\EmployeesController');
                 Route::resource('/assets', 'Admin\AssetController');
-                Route::resource('/reports', 'Admin\ReportsController');
+                Route::resource('/audits', 'Admin\AuditsController');
                 Route::resource('/users', 'Admin\UserController');
 
             }

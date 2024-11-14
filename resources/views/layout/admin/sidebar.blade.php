@@ -28,11 +28,11 @@
             <div data-i18n="Categories">Categories</div>
           </a>
         </li>
-        <!-- Reports -->
-        <li class="menu-item {{ request()->segment(2) == 'reports' ? 'active' : '' }}">
-          <a href="{{ url('/admin/reports') }}" class="menu-link">
+        <!-- Audit -->
+        <li class="menu-item {{ request()->segment(2) == 'audits' ? 'active' : '' }}">
+          <a href="{{ url('/admin/audits') }}" class="menu-link">
             <i class="menu-icon tf-icons ti ti-receipt"></i>
-            <div data-i18n="Reports">Reports</div>
+            <div data-i18n="Audits">Audits</div>
           </a>
         </li>
 {{-- 
