@@ -139,16 +139,51 @@ class AssetController extends Controller
     
 
             //update the asset
-            $asset->update([
-                'user_id' => auth()->user()->id,
-                'description' => $request->description,
-                'serial_number' => $request->serial_number,
-                'purchase_date' => $request->purchase_date,
-                'warranty_date' => $request->warranty_date,
-                'decommission_date' => $request->decommission_date,
-                'latitude' => $latitude,
-                'longitude' => $longitude,
-            ]);
+            if ($request->name != null) {
+                $asset->name = $request->name;
+            }
+            if ($request->category != null) {
+                $asset->category_id = $request->category;
+            }
+            if ($request->employee != null) {
+                $asset->employee_id = $request->employee;
+            }
+            if ($request->description != null) {
+                $asset->description = $request->description;
+            }
+            if ($request->code != null) {
+                $asset->code = $request->code;
+            }
+
+            if ($request->serial_number != null) {
+                $asset->serial_number = $request->serial_number;
+            }
+
+            if ($request->status != null) {
+                $asset->status = $request->status;
+            }
+
+            if ($request->purchase_date != null) {
+                $asset->purchase_date = $request->purchase_date;
+            }
+
+            if ($request->warranty_date != null) {
+                $asset->warranty_date = $request->warranty_date;
+            }
+
+            if ($request->decommission_date != null) {
+                $asset->decommission_date = $request->decommission_date;
+            }
+
+            if ($request->latitude != null) {
+                $asset->latitude = $request->latitude;
+            }
+
+            if ($request->longitude != null) {
+                $asset->longitude = $request->longitude;
+            }
+
+          
 
             DB::commit();
 
