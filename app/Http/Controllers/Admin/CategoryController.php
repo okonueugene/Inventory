@@ -92,9 +92,9 @@ class CategoryController extends Controller
             'name' => 'required',
         ]);
 
-        // try {
+        try {
 
-        //     DB::beginTransaction();
+            DB::beginTransaction();
 
             $category = new Category();
             $category->name = $request->name;
@@ -110,15 +110,15 @@ class CategoryController extends Controller
 
             return response()->json($output);
 
-        // } catch (\Exception $e) {
-        //     DB::rollBack();
-        //     $output = [
-        //         'success' => false,
-        //         'msg' => 'An error occurred while adding the category'
-        //     ];
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $output = [
+                'success' => false,
+                'msg' => 'An error occurred while adding the category'
+            ];
 
-        //     return response()->json($output);
-        // }
+            return response()->json($output);
+        }
 
         
     }
@@ -214,3 +214,4 @@ class CategoryController extends Controller
         }
     }
 }
+
