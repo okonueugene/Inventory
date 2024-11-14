@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\EmployeesExport;
 use App\Http\Controllers\Controller;
+use App\Imports\EmployeesImport;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class EmployeesController extends Controller
@@ -151,10 +154,9 @@ class EmployeesController extends Controller
 
             return response()->json($output);
 
-
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             $output = [
                 'success' => false,
                 'msg' => 'Something went wrong',
@@ -183,7 +185,7 @@ class EmployeesController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             $output = [
                 'success' => false,
                 'msg' => 'Something went wrong',
@@ -191,6 +193,84 @@ class EmployeesController extends Controller
 
             return response()->json($output);
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new EmployeesExport, 'employees.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $rules = [
+            'file' => 'required|mimes:xls,xlsx',
+        ];
+
+        $messages = [
+            'file.required' => 'Please upload a file',
+            'file.mimes' => 'Incorrect file extension',
+        ];
+
+        $request->validate($rules, $messages);
+
+        try {
+            DB::beginTransaction();
+
+            Excel::import(new EmployeesImport, $request->file('file'));
+
+            DB::commit();
+
+            $output = [
+                'success' => true,
+                'msg' => 'Employees imported successfully',
+            ];
+
+            return response()->json($output);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $output = [
+                'success' => false,
+                'msg' => 'Something went wrong',
+            ];
+
+            return response()->json($output);
+        } catch (ValidationException $e) {
+            // Handle validation exception
+            $errorMessage = implode(' & ', $e->validator->errors()->all());
+
+            return redirect()->back()->with('error', $errorMessage);
+        } catch (QueryException $e) {
+            // Handle specific database exception (Integrity constraint violation)
+            if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                $errorMessage = 'Duplicate entry found. Please check your file for duplicate records.';
+            } else {
+                // Handle other database exceptions if needed
+                $errorMessage = 'Database error during import.';
+            }
+
+            return redirect()->back()->with('error', $errorMessage);
+        } catch (\Exception $e) {
+            // Handle other generic exceptions
+            $errorMessage = $this->getErrorMessage($e);
+
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
+    private function getErrorMessage(\Exception $e): string
+    {
+        if ($e instanceof \Illuminate\Validation\ValidationException) {
+            //format messages as html with line break
+            $errorMessage = implode(' & ', $e->validator->errors()->all());
+
+        } elseif ($e instanceof \Illuminate\Database\QueryException) {
+            $errorMessage = 'Database error during import.';
+        } else {
+            $errorMessage = 'Error during import.';
+        }
+
+        return $errorMessage;
     }
 
 }

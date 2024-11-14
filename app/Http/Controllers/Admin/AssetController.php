@@ -192,18 +192,64 @@ class AssetController extends Controller
 
             $asset = Asset::findOrFail($id);
 
-            $asset->update([
-                'name' => $request->name,
-                'category_id' => $request->category,
-                'employee_id' => $request->employee,
-                'description' => $request->description,
-                'code' => $request->code,
-                'serial_number' => $request->serial_number,
-                'status' => $request->status,
-                'purchase_date' => $request->purchase_date,
-                'warranty_date' => $request->warranty_date,
-                'decommission_date' => $request->decommission_date,
-            ]);
+            // $asset->update([
+            //     'name' => $request->name,
+            //     'category_id' => $request->category,
+            //     'employee_id' => $request->employee,
+            //     'description' => $request->description,
+            //     'code' => $request->code,
+            //     'serial_number' => $request->serial_number,
+            //     'status' => $request->status,
+            //     'purchase_date' => $request->purchase_date,
+            //     'warranty_date' => $request->warranty_date,
+            //     'decommission_date' => $request->decommission_date,
+            // ]);
+
+            if ($request->name != null) {
+                $asset->name = $request->name;
+            }
+            if ($request->category != null) {
+                $asset->category_id = $request->category;
+            }
+            if ($request->employee != null) {
+                $asset->employee_id = $request->employee;
+            }
+            if ($request->description != null) {
+                $asset->description = $request->description;
+            }
+            if ($request->code != null) {
+                $asset->code = $request->code;
+            }
+
+            if ($request->serial_number != null) {
+                $asset->serial_number = $request->serial_number;
+            }
+
+            if ($request->status != null) {
+                $asset->status = $request->status;
+            }
+
+            if ($request->purchase_date != null) {
+                $asset->purchase_date = $request->purchase_date;
+            }
+
+            if ($request->warranty_date != null) {
+                $asset->warranty_date = $request->warranty_date;
+            }
+
+            if ($request->decommission_date != null) {
+                $asset->decommission_date = $request->decommission_date;
+            }
+
+            if ($request->latitude != null) {
+                $asset->latitude = $request->latitude;
+            }
+
+            if ($request->longitude != null) {
+                $asset->longitude = $request->longitude;
+            }
+
+            $asset->save();
 
             if ($request->hasFile('image')) {
                 $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');

@@ -6,7 +6,13 @@
                 data-href="{{ url('/admin/employees/create') }}">
                 Add Employee
             </a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-sm  float-end modal-button mt-2"
+                class="btn btn-icon icon-left btn-info float-end" onclick="importEmployees()">
+                <i class="fas fa-file-import"></i> Import Employees
+            </a>
         </div>
+
+
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"> </span>{{ $page_title }}</h4>
         <div class="card">
             <div class="table">
@@ -26,6 +32,32 @@
 
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('modals')
+    <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleexportCasualModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleexportCasualModal">Import Employees</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('import-employees') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+
+                            <input type="file" name="file" accept=".xlsx, .xls">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit">Upload</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -80,5 +112,32 @@
             var page_table = __initializePageTable(url, columns, filters);
 
         });
+
+        function importEmployees() {
+            Swal.fire({
+                title: 'Import Employees',
+                text: "Do you want to download a sample file first?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Create a link to initiate the download without using the download attribute
+                    window.location.href = "{{ route('export-employees') }}";
+
+                    Swal.fire(
+                        'Success!',
+                        'Sample file downloaded successfully',
+                        'success'
+                    );
+                } else {
+                    // If the user does not want to download the sample file, open the import modal
+                    $('#importModal').modal('show');
+                }
+            });
+        }
     </script>
 @endsection

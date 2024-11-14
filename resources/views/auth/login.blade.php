@@ -60,7 +60,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="{{ asset('assets/img/logo.jpeg') }}" class="mb-2" alt="" width="80" />
+                            <img src="{{ asset('assets/img/logo.jpeg') }}" class="mb-2" alt=""
+                                width="80" />
                         </div>
                         <h4 class="mb-1 pt-2 text-center">Welcome to {{ env('APP_NAME') }}</h4>
                         <p class="mb-4 text-center">Please sign-in to your account below.</p>
@@ -102,82 +103,56 @@
                                 <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                             </div>
                         </form>
-
-                        <p class="text-center">
-                            <span>New on our platform?</span>
-                            <a href="auth-register-basic.html">
-                                <span>Create an account</span>
-                            </a>
-                        </p>
-
-                        <div class="divider my-4">
-                            <div class="divider-text">or</div>
-                        </div>
-
-                        <div class="d-flex justify-content-center">
-                            <a href="javascript:;" class="btn btn-icon btn-label-facebook me-3">
-                                <i class="tf-icons fa-brands fa-facebook-f fs-5"></i>
-                            </a>
-
-                            <a href="javascript:;" class="btn btn-icon btn-label-google-plus me-3">
-                                <i class="tf-icons fa-brands fa-google fs-5"></i>
-                            </a>
-
-                            <a href="javascript:;" class="btn btn-icon btn-label-twitter">
-                                <i class="tf-icons fa-brands fa-twitter fs-5"></i>
-                            </a>
-                        </div>
                     </div>
+                    <!-- /Register -->
                 </div>
-                <!-- /Register -->
             </div>
         </div>
-    </div>
 
-    <!-- / Content -->
+        <!-- / Content -->
 
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
-    <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/node-waves/node-waves.js') }}"></script>
+        <!-- Core JS -->
+        <!-- build:js assets/vendor/js/core.js -->
+        <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
+        <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/node-waves/node-waves.js') }}"></script>
 
-    <script src="{{ asset('assets/vendor/libs/hammer/hammer.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/i18n/i18n.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/hammer/hammer.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/i18n/i18n.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
 
-    <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
-    <!-- endbuild -->
+        <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
+        <!-- endbuild -->
 
-    <!-- Vendors JS -->
-    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+        <!-- Vendors JS -->
+        <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
 
-    <!-- Main JS -->
-    <script src="{{ asset('assets/js/main.js') }}"></script>
+        <!-- Main JS -->
+        <script src="{{ asset('assets/js/main.js') }}"></script>
 
-    <!-- Page JS -->
-    <script src="{{ asset('assets/js/pages-auth.js') }}"></script>
+        <!-- Page JS -->
+        <script src="{{ asset('assets/js/pages-auth.js') }}"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('.toggle-password').click(function() {
-                const passwordInput = $('#password');
-                const icon = $(this).find('i');
+        <script>
+            $(document).ready(function() {
+                $('.toggle-password').click(function() {
+                    const passwordInput = $('#password');
+                    const icon = $(this).find('i');
 
-                if (passwordInput.attr('type') === 'password') {
-                    passwordInput.attr('type', 'text');
-                    icon.removeClass('ti-eye-off').addClass('ti-eye');
-                } else {
-                    passwordInput.attr('type', 'password');
-                    icon.removeClass('ti-eye').addClass('ti-eye-off');
-                }
+                    if (passwordInput.attr('type') === 'password') {
+                        passwordInput.attr('type', 'text');
+                        icon.removeClass('ti-eye-off').addClass('ti-eye');
+                    } else {
+                        passwordInput.attr('type', 'password');
+                        icon.removeClass('ti-eye').addClass('ti-eye-off');
+                    }
+                });
             });
-        });
-    </script>
+        </script>
 
 </body>
 

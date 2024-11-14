@@ -16,6 +16,7 @@ class Employee extends Model implements HasMedia
 
     protected $fillable = [
         'name',
+        'email',
         'department',
         'designation',
         'location',

@@ -41,6 +41,10 @@ Route::group(
                 Route::resource('/audits', 'Admin\AuditsController');
                 Route::resource('/users', 'Admin\UserController');
 
+                //export and import
+                Route::get('/export-employees', 'Admin\EmployeesController@export')->name('export-employees');
+                Route::post('/import-employees', 'Admin\EmployeesController@import')->name('import-employees');
+
             }
             );
 
