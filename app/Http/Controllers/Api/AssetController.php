@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -122,23 +123,19 @@ class AssetController extends Controller
 
             $asset = Asset::findOrFail($id);
 
+            //if the asset is not found, return an error message
+            if (!$asset) {
+                return response()->json(['message' => 'Asset not found'], 404);
+            }
+
             // Only update fields if they are present in the request
             $asset->update([
-                'name' => $request->has('name') ? $request->name : $asset->name,
-                'category_id' => $request->has('category') ? $request->category : $asset->category_id,
-                'employee_id' => $request->has('employee') ? $request->employee : $asset->employee_id,
-                'description' => $request->has('description') ? $request->description : $asset->description,
-                'code' => $request->has('code') ? $request->code : $asset->code,
-                'serial_number' => $request->has('serial_number') ? $request->serial_number : $asset->serial_number,
-                'status' => $request->has('status') ? $request->status : $asset->status,
-                'purchase_date' => $request->has('purchase_date') ? $request->purchase_date : $asset->purchase_date,
-                'warranty_date' => $request->has('warranty_date') ? $request->warranty_date : $asset->warranty_date,
-                'decommission_date' => $request->has('decommission_date') ? $request->decommission_date : $asset->decommission_date,
+                'description' => $request->description,
+                'serial_number' => $request->serial_number,
+                'purchase_date' => Carbon::parse($request->purchase_date),
+                'warranty_date' => Carbon::parse($request->warranty_date),
+                'decommission_date' => Carbon::parse($request->decommission_date),
             ]);
-
-            if ($request->hasFile('image')) {
-                $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
-            }
 
             DB::commit();
 
