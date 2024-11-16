@@ -19,29 +19,23 @@ class AuthenticationController extends Controller
 {
     public function loginUser(Request $request)
     {
-        $rules = [
+        $rules = array(
             'email' => 'required',
             'password' => 'required',
-        ];
-    
+        );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 403);
         }
-    
-        $user = User::where('email', $request->email)->first();
-    
-        if ($user && Hash::check($request->password, $user->password)) {
-            // Pass the 'remember' option based on checkbox value
-            Auth::login($user, $request->has('remember'));
-    
-            $user->update([
-                'last_login_at' => Carbon::now()->toDateTimeString(),
-                'last_login_ip' => $request->getClientIp(),
-            ]);
-    
+
+             //check for remember me and also update last_login_at and last_login_ip
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            $user = Auth::user();
+            $user->last_login_at = now();
+            $user->last_login_ip = $request->ip();
+            $user->save();
+
             return redirect()->route('dashboard');
-    
         } else {
             return redirect()->back()->with('error', 'Invalid email or password');
         }
