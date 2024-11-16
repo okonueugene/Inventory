@@ -32,7 +32,7 @@
                                     <script>
                                         document.write(new Date().getFullYear());
                                     </script>
-                                    Askari Technologies
+                                    Metaspace Technologies Limited. All rights reserved.
                                 </div>
                                 <div>
                                     <a href="javascript:void(0);" class="footer-link me-4" target="_blank">License</a>

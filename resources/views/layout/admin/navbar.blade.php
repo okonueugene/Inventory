@@ -3,7 +3,7 @@
         <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
             <a href="{{ url('/admin/dashboard') }}" class="app-brand-logo demo">
                 <span class="app-brand-logo demo">
-                    <img src="{{ asset('images/Opticom Logo.png') }}" alt="Brand Logo" class="logo-icon me-2"
+                    <img src="{{ asset('assets/img/logo.jpeg') }}" alt="Brand Logo" class="logo-icon me-2"
                         width="80" height="80" />
                 </span>
             </a>
@@ -43,6 +43,12 @@
                                         class="ti ti-sm ti-apps"></i></a>
                             </div>
                         </div>
+{{-- 
+                Route::resource('/categories', 'Admin\CategoryController');
+                Route::resource('/employees', 'Admin\EmployeesController');
+                Route::resource('/assets', 'Admin\AssetController');
+                Route::resource('/audits', 'Admin\AuditsController');
+                Route::resource('/users', 'Admin\UserController'); --}}
                         <div class="dropdown-shortcuts-list scrollable-container">
                             <div class="row row-bordered overflow-visible g-0">
                                 <div class="dropdown-shortcuts-item col">
@@ -56,8 +62,8 @@
                                     <span class="dropdown-shortcuts-icon rounded-circle mb-2">
                                         <i class="ti ti-server fs-4"></i>
                                     </span>
-                                    <a href="{{ url('/admin/sites') }}" class="stretched-link">Sites</a>
-                                    <small class="text-muted mb-0">All Sites</small>
+                                    <a href="{{ url('/admin/assets') }}" class="stretched-link">Assets</a>
+                                    <small class="text-muted mb-0">Assets</small>
                                 </div>
                             </div>
                             <div class="row row-bordered overflow-visible g-0">
@@ -65,15 +71,15 @@
                                     <span class="dropdown-shortcuts-icon rounded-circle mb-2">
                                         <i class="ti ti-file fs-4"></i>
                                     </span>
-                                    <a href="{{ url('/admin/reports') }}" class="stretched-link">Reports</a>
-                                    <small class="text-muted mb-0">All Reports</small>
+                                    <a href="{{ url('/admin/audits') }}" class="stretched-link">Audit Logs</a>
+                                    <small class="text-muted mb-0">Audit Logs</small>
                                 </div>
                                 <div class="dropdown-shortcuts-item col">
                                     <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                        <i class="ti ti-settings fs-4"></i>
+                                        <i class="ti ti-users fs-4"></i>
                                     </span>
-                                    <a href="{{ url('/admin/config') }}" class="stretched-link">Configuration</a>
-                                    <small class="text-muted mb-0">All Configuration</small>
+                                    <a href="{{ url('/admin/employees') }}" class="stretched-link">Employees</a>
+                                    <small class="text-muted mb-0">Employees</small>
                                 </div>
                             </div>
                             <div class="row row-bordered overflow-visible g-0">
@@ -81,17 +87,17 @@
                                     <span class="dropdown-shortcuts-icon rounded-circle mb-2">
                                         <i class="ti ti-user fs-4"></i>
                                     </span>
-                                    <a href="{{ url('/admin/user-management') }}" class="stretched-link">User
+                                    <a href="{{ url('/admin/users') }}" class="stretched-link">User
                                         Management</a>
                                     <small class="text-muted mb-0">User Management</small>
                                 </div>
                                 <div class="dropdown-shortcuts-item col">
                                     <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                        <i class="ti ti-help fs-4"></i>
+                                        <i class="ti ti-list fs-4"></i>
                                     </span>
-                                    <a href="https://support.optitech.co.ke/" target="_blank"
-                                        class="stretched-link">Help</a>
-                                    <small class="text-muted mb-0">Help</small>
+                                    <a href="{{ url('/admin/categories') }}"
+                                        class="stretched-link">Categories</a>
+                                    <small class="text-muted mb-0">Categories</small>
                                 </div>
                             </div>
                         </div>

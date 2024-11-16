@@ -165,7 +165,7 @@
               </div>
               <button class="btn btn-primary d-grid w-100 mb-3">Set new password</button>
               <div class="text-center">
-                  <a href="{{ route('login') }}">
+                  <a href="{{ url('/') }}" class="d-flex align-items-center justify-content-center">
                       <i class="ti ti-chevron-left scaleX-n1-rtl"></i> Back to login
                   </a>
               </div>

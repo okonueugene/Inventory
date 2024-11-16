@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Forgot Password Cover - Pages | Vuexy - Bootstrap Admin Template</title>
+    <title>Forgot Password - {{ env('APP_NAME') }}</title>
 
     <meta name="description" content="" />
 
@@ -114,7 +114,7 @@
                     @endif
                     <div class="divider my-4"></div>
                     <div class="text-center">
-                        <a href="{{ route('login') }}" class="d-flex align-items-center justify-content-center">
+                        <a href="{{ url('/') }}" class="d-flex align-items-center justify-content-center">
                             <i class="ti ti-chevron-left scaleX-n1-rtl"></i>
                             Back to login
                         </a>

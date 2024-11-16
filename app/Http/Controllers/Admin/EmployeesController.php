@@ -219,13 +219,7 @@ class EmployeesController extends Controller
             Excel::import(new EmployeesImport, $request->file('file'));
 
             DB::commit();
-
-            $output = [
-                'success' => true,
-                'msg' => 'Employees imported successfully',
-            ];
-
-            return response()->json($output);
+            return redirect()->back()->with('success', 'Employees imported successfully');
 
         } catch (\Exception $e) {
             DB::rollBack();

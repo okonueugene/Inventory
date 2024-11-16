@@ -5,27 +5,14 @@ namespace App\Exports;
 
 use App\Models\Employee;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
 
-class EmployeesExport implements FromCollection, WithHeadings, WithMapping
+class EmployeesExport implements  WithHeadings
 {
     /**
      * @return \Illuminate\Support\Collection
      */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'department',
-    //     'designation',
-    //     'location',
-    // ];
 
-    public function collection()
-    {
-        return Employee::all();
-    }
 
     public function headings(): array
     {
@@ -38,16 +25,6 @@ class EmployeesExport implements FromCollection, WithHeadings, WithMapping
         ];
     }
 
-    public function map($employee): array
-    {
-        return [
-            $employee->name,
-            $employee->email,
-            $employee->department,
-            $employee->designation,
-            $employee->location,
-        ];
-    }
 
 }
 

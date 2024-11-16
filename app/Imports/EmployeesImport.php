@@ -3,20 +3,17 @@
 namespace App\Imports;
 
 use App\Models\Employee;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
-use Maatwebsite\Excel\Concerns\ToModel;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class EmployeesImport implements ToModel, WithHeadingRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         // Check if all required columns are present in the row
@@ -30,27 +27,27 @@ class EmployeesImport implements ToModel, WithHeadingRow
             }
         }
 
-        // Check if the email is valid
-        if (!filter_var($row['email'], FILTER_VALIDATE_EMAIL)) {
+        // Check if the email is valid or not if not null
+        if (!empty($row['email']) && !filter_var($row['email'], FILTER_VALIDATE_EMAIL)) {
             throw ValidationException::withMessages([
-                'message' => 'Invalid email',
+                'email' => 'Invalid email address',
             ]);
         }
 
-                //validation rules
-                $rules = [
-                    'name' => 'required',
-                    'department' => 'required',
-                    'designation' => 'required',
-                    'location' => 'required',
-                ];
+        //validation rules
+        $rules = [
+            'name' => 'required',
+            'department' => 'required',
+            'designation' => 'required',
+            'location' => 'required',
+        ];
 
-                //validate the row
-                $validator = \Validator::make($row, $rules);
+        //validate the row
+        $validator = \Validator::make($row, $rules);
 
-                if ($validator->fails()) {
-                    throw new ValidationException($validator);
-                }
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
 
         return new Employee([
             'name' => $row['name'],
@@ -62,5 +59,3 @@ class EmployeesImport implements ToModel, WithHeadingRow
 
     }
 }
-
-
