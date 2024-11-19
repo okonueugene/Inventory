@@ -31,13 +31,8 @@ class AuditController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'asset_id' => 'required|exists:assets,id',
-            'status' => 'required',
-            'remarks' => 'required',
-            'condition' => 'required',
-            'action' => 'required',
+            'asset_id' => 'required|exists:assets,id'
         ]);
-
 
         try 
         {
