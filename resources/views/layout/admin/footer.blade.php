@@ -86,25 +86,31 @@
         };
     @endif
 
-    //auto scroll for notifications
-    document.addEventListener('DOMContentLoaded', function() {
-        const scrollableContainer = document.getElementById('scrollable-container');
+//     document.addEventListener('DOMContentLoaded', function () {
+//     const scrollableContainer = document.getElementById('scrollable-container');
 
-        let scrollInterval;
+//     let scrollInterval;
+//     let direction = 1; // 1 for down, -1 for up
 
-        scrollableContainer.addEventListener('mouseenter', () => {
-            scrollInterval = setInterval(() => {
-                if (scrollableContainer.scrollTop + scrollableContainer.clientHeight >=
-                    scrollableContainer.scrollHeight) {
-                    scrollableContainer.scrollTop = 0;
-                } else {
-                    scrollableContainer.scrollTop += 2.5;
-                }
-            }, 50);
-        });
+//     scrollableContainer.addEventListener('mouseenter', () => {
+//         scrollInterval = setInterval(() => {
+//             // Check if at the bottom
+//             if (scrollableContainer.scrollTop + scrollableContainer.clientHeight >= scrollableContainer.scrollHeight) {
+//                 direction = -1; // Change direction to up
+//             }
+//             // Check if at the top
+//             else if (scrollableContainer.scrollTop === 0) {
+//                 direction = 1; // Change direction to down
+//             }
 
-        scrollableContainer.addEventListener('mouseleave', () => {
-            clearInterval(scrollInterval);
-        });
-    });
+//             // Scroll in the current direction
+//             scrollableContainer.scrollTop += direction * 2.5; // Adjust speed if needed
+//         }, 50);
+//     });
+
+//     scrollableContainer.addEventListener('mouseleave', () => {
+//         clearInterval(scrollInterval);
+//     });
+// });
+
 </script>

@@ -15,7 +15,7 @@
             <!-- Email -->
             <div class="mb-3">
                 <label class="form-label" for="email">Email</label>
-                <input type="email" class="form-control" value="{{ $employee->email }}" readonly>
+                <input type="email" class="form-control" value="{{ $employee->email ?? 'N/A' }}" readonly>
             </div>
             <!-- Department -->
             <div class="mb-3">

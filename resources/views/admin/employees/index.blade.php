@@ -8,7 +8,7 @@
             </a>
             <a href="javascript:void(0)" class="btn btn-primary btn-sm  float-end modal-button mt-2"
                 class="btn btn-icon icon-left btn-info float-end" onclick="importEmployees()">
-                <i class="fas fa-file-import"></i> Import Employees
+                Import Employees
             </a>
         </div>
 

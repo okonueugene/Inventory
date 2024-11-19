@@ -49,13 +49,17 @@ class EmployeesImport implements ToModel, WithHeadingRow
             throw new ValidationException($validator);
         }
 
-        return new Employee([
-            'name' => $row['name'],
-            'email' => $row['email'],
-            'department' => $row['department'],
-            'designation' => $row['designation'],
-            'location' => $row['location'],
-        ]);
+        //add notification to all users
+        $employee = new Employee();
+        $employee->name = $row['name'];
+        $employee->email = $row['email'];
+        $employee->department = $row['department'];
+        $employee->designation = $row['designation'];
+        $employee->location = $row['location'];
+        $employee->save();
+        $employee->addNotification();
+
+
 
     }
 }

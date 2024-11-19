@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Asset;
+use App\Models\Audit;
+use App\Models\Category;
+use App\Models\Employee;
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use App\Models\User;
-use Illuminate\Support\Str;
-use App\Models\Notification;
-use App\Models\Asset;
+
 class Asset extends Model implements HasMedia
 {
     use HasFactory;
@@ -59,5 +63,27 @@ class Asset extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('asset_images');
+    }
+
+    public function addNotification()
+    {
+        $notifiable = User::all()->pluck('id')->toArray();
+        foreach ($notifiable as $not) {
+            if (auth()->user()->id != $not) {
+                $uuid = Str::uuid();
+
+                $data = array(
+                    'type' => 'new_asset',
+                    'title' => 'New Asset Added',
+                    'notification_key' => $uuid,
+                    'user_id' => $not,
+                    'message' => auth()->user()->name . ' added a new asset',
+                    'link' => url('admin/assets') . "?notification=" . $uuid,
+                    'created_by' => auth()->user()->id,
+                );
+
+                Notification::create($data);
+            }
+        }
     }
 }

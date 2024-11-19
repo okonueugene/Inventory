@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -139,21 +139,47 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $user = User::find($id);
-            $user->name = $request->name;
-            $user->email = $request->email;
 
-            if ($request->password) {
-                $user->password = Hash::make($request->password);
+            $updated = false;
+
+            if ($request->has('name') && $user->name !== $request->name) {
+                $user->name = $request->name;
+                $updated = true;
             }
 
-            $user->save();
+            if ($request->has('email') && $user->email !== $request->email) {
+                $user->email = $request->email;
+                $updated = true;
+            }
 
-            DB::commit();
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+                $updated = true;
+            }
+
+            if ($request->filled('role')) {
+                $user->role = $request->role;
+                $updated = true;
+            }
+
+            // Handle avatar/profile picture upload
+// Handle avatar/profile picture upload
+            if ($request->hasFile('avatar')) {
+                // Remove the existing avatar using DefaultFileRemover if it exists
+                if ($user->getFirstMedia('avatars')) {
+                    $user->clearMediaCollection('avatars');
+                }
+
+                // Add the new avatar
+                $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+            }
 
             $output = [
                 'success' => true,
                 'msg' => 'User updated successfully',
             ];
+
+            DB::commit();
 
             return response()->json($output);
 
@@ -197,6 +223,14 @@ class UserController extends Controller
 
             return response()->json($output);
         }
+    }
+
+    public function profile()
+    {
+        $user = auth()->user();
+
+        return view('admin.users.profile', compact('user'));
+
     }
 
 }

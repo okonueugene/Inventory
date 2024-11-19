@@ -123,34 +123,36 @@ class AssetController extends Controller
 
             DB::beginTransaction();
 
-            $asset = Asset::create([
-                'name' => $request->name,
-                'category_id' => $request->category,
-                'employee_id' => $request->employee,
-                'user_id' => auth()->user()->id,
-                'description' => $request->description,
-                'code' => $request->code,
-                'serial_number' => $request->serial_number,
-                'status' => $request->status,
-                'purchase_date' => $request->purchase_date,
-                'warranty_date' => $request->warranty_date,
-                'decommission_date' => $request->decommission_date,
-                'latitude' => $request->latitude,
-                'longitude' => $request->longitude,
-            ]);
+        $asset = Asset::create([
+            'name' => $request->name,
+            'category_id' => $request->category,
+            'employee_id' => $request->employee,
+            'user_id' => auth()->user()->id,
+            'description' => $request->description,
+            'code' => $request->code,
+            'serial_number' => $request->serial_number,
+            'status' => $request->status,
+            'purchase_date' => $request->purchase_date,
+            'warranty_date' => $request->warranty_date,
+            'decommission_date' => $request->decommission_date,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
 
-            if ($request->hasFile('image')) {
-                $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
-            }
+        if ($request->hasFile('image')) {
+            $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
+        }
 
-            DB::commit();
+        $asset->addNotification();
 
-            $output = [
-                'success' => true,
-                'msg' => 'Asset created successfully',
-            ];
+        DB::commit();
 
-            return response()->json($output, 200);
+        $output = [
+            'success' => true,
+            'msg' => 'Asset created successfully',
+        ];
+
+        return response()->json($output, 200);
 
         } catch (\Exception $e) {
             DB::rollBack();

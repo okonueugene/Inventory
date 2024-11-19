@@ -30,6 +30,15 @@ class AuditController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'asset_id' => 'required|exists:assets,id',
+            'status' => 'required',
+            'remarks' => 'required',
+            'condition' => 'required',
+            'action' => 'required',
+        ]);
+
+
         try 
         {
             DB::beginTransaction();
@@ -44,6 +53,8 @@ class AuditController extends Controller
             $audit->status = 0;
 
             $audit->save();
+
+            $audit->addNotification();
 
             DB::commit();
 

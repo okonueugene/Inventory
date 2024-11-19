@@ -82,6 +82,9 @@ class AssetController extends Controller
                 $asset->addMediaFromRequest('image')->toMediaCollection('asset_images');
             }
 
+            //add notification
+            $asset->addNotification();
+
             DB::commit();
 
             $output = [

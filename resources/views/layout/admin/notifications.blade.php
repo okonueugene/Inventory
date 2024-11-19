@@ -28,35 +28,23 @@
                     @foreach ($unread as $one)
                         @php
                             switch ($one->type) {
-                                case 'new_incident':
-                                    $acr = 'IN';
+                                case 'new_asset':
+                                    $acr = 'AS';
                                     break;
-                                case 'new_sor':
-                                    $acr = 'SO';
+                                case 'new_audit':
+                                    $acr = 'AU';
                                     break;
-                                case 'new_ica':
-                                    $acr = 'IC';
+                                case 'new_category':
+                                    $acr = 'CA';
                                     break;
-                                case 'new_environment':
-                                    $acr = 'EC';
+                                case 'new_employee':
+                                    $acr = 'EM';
                                     break;
-                                case 'new_first_responder':
-                                    $acr = 'FR';
-                                    break;
-                                case 'new_personel_present':
-                                    $acr = 'PP';
-                                    break;
-                                case 'new_permit':
-                                    $acr = 'PA';
-                                    break;
-                                case 'new_supervisor':
-                                    $acr = 'SU';
-                                    break;
-                                case 'new_task':
-                                    $acr = 'TA';
+                                case 'new_user':
+                                    $acr = 'US';
                                     break;
                                 default:
-                                    $acr = 'NO';
+                                    $acr = 'NA';
                                     break;
                             }
                         @endphp
@@ -72,7 +60,7 @@
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">{{ $one->title }}</h6>
                                     <p class="mb-0">{{ $one->message }}</p>
-                                    <small class="text-muted">{{ format_datetime($one->created_at) }}</small>
+                                    <small class="text-muted">{{ $one->created_at->diffForHumans() }}</small>
                                 </div>
                                 <div class="flex-shrink-0 dropdown-notifications-actions">
                                     <a href="{{ $one->link }}" class="dropdown-notifications-read"><span

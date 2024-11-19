@@ -52,6 +52,9 @@ class EmployeesController extends Controller
                     $serialNumber++;
                     return $serialNumber;
                 })
+                ->editColumn('email', function ($row) {
+                    return $row->email ?? 'N/A';
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -88,8 +91,8 @@ class EmployeesController extends Controller
             $employee->designation = $request->designation;
             $employee->location = $request->location;
             $employee->email = $request->email ?? null;
-
             $employee->save();
+            $employee->addNotification();
 
             DB::commit();
 
