@@ -21,7 +21,7 @@ class AssetController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required',
+            'name' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'employee_id' => 'nullable|exists:employees,id',
             'description' => 'nullable',
